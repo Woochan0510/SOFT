@@ -1,0 +1,33 @@
+* {
+  /*margin과 padding을 사용하여 (0,0)으로 빈공간을 없이 맞춰준다*/
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+li {
+  list-style: none; /*ui,li의 앞에 붙는 .을 없애준다.*/
+}
+
+a {
+  text-decoration: none; /*링크 설정시 밑줄에 줄이 생기는것을 없애준다.*/
+}
+
+#wrap {
+  width: 100%;
+}
+
+#header {
+  width: 1200px;
+  height: 100px;
+  margin: 0 auto;
+  padding: 20px 0 0 0;
+  box-sizing: border-box;
+}
+
+#story {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: tomato;
+}
