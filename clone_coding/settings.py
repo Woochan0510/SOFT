@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-&o%64u@muur=tjg1n#9-3bum@%7_))$$!(f_^xy27t%di9upr3
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+#TO DO : 배포 시에는 FALSE로 변경하기
 ALLOWED_HOSTS = []
 
 
@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'clone_coding',
+    'content',
+    'user'
 ]
 
 MIDDLEWARE = [
