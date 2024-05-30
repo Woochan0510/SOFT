@@ -28,6 +28,12 @@
         height: 100%;
         object-fit: cover;
       }
+
+      input:focus {
+        outline: none;
+        box-shadow: none;
+        border: none;
+      }
     </style>
   </head>
   <body>
@@ -150,7 +156,14 @@
           <div style="margin: 0 20px; text-align: left; font-size: 14px">
             <b>tlsdncks</b>댓글2
           </div>
-          <div>댓글 입력창</div>
+          <div style="border-top: 1px solid silver">
+            <input
+              type="email"
+              class="form-control"
+              style="box-shadow: none; border: none"
+              placeholder="댓글 달기.."
+            />
+          </div>
         </div>
       </div>
       <div
