@@ -17,9 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import Sub
-from content.views import Main
+from content.views import Main, UploadFeed
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('main/',Main.as_view())
+    path('main/', Main.as_view()),
+    path('content/upload', UploadFeed.as_view())
 ]
