@@ -12,6 +12,8 @@ from clone_coding.settings import MEDIA_ROOT
 class Main(APIView):
     def get(self, request):
         feed_list = Feed.objects.all().order_by('-id') # select * from content_feed
+        email = request.session.get('email', None)
+        print("로그인한 사용자:", email)
 
         return render(request, "silvergram/main.html", context=dict(feeds=feed_list))
     
