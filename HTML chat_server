@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket 채팅</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        .messages {
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-height: 100px; /* 세로 크기 설정 */
+            max-width: 100px; /* 가로 크기 설정 */
+            overflow-y: scroll;
+        }
+        .message-input {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>WebSocket 채팅</h2>
+    <div class="messages" id="messages">
+ 
+        <!-- 채팅 메시지가 여기에 표시됩니다 -->
+    </div>
+    <form id="message-form" class="message-input">
+        <input type="text" id="message" name="message" placeholder="메시지를 입력하세요...">
+        <button type="submit">전송</button>
+    </form>
+
+    <script>
+        var ws = new WebSocket("ws://localhost:8080/ws");#포트번호 연결 안되면 번호 바꿔서 해결해주세요.
+
+        ws.onopen = function(event) {
+            console.log("WebSocket 연결 성공");
+        };
+
+        ws.onmessage = function(event) {
+            var message = event.data;
+            updateMessages(message);
+        };
+
+        ws.onerror = function(event) {
+            console.error("WebSocket 에러 발생:", event);
+        };
+
+        ws.onclose = function(event) {
+            console.log("WebSocket 연결 종료");
+        };
+
+        document.getElementById("message-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var messageInput = document.getElementById("message");
+            var message = messageInput.value.trim();
+
+            if (message !== "") {
+                sendMessage(message);
+                messageInput.value = "";
+            }
+        });
+
+        function sendMessage(message) {
+            ws.send(message);
+        }
+
+        function updateMessages(message) {
+            var messagesDiv = document.getElementById("messages");
+            var newMessage = document.createElement("div");
+            newMessage.textContent = message;
+            messagesDiv.appendChild(newMessage);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+    </script>
+</body>
+</html>
