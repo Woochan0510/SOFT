@@ -87,7 +87,7 @@
       <input class="form-control me-2" style="width: 400px" type="search" placeholder="Search" aria-label="Search" />
       <div style="display: flex; width: 200px; justify-content: space-evenly">
         <span class="material-icons"> home </span>
-        <span class="material-icons"> send </span>
+        <span id="chat" class="material-icons"> send </span>
         <span id="nav_bar_add_box" class="material-icons-outlined"> add_box</span>
         <span class="material-icons-outlined"> explore </span>
         <span class="material-icons-outlined"> favorite_border </span>
@@ -134,7 +134,7 @@
           <div>
             <span class="material-icons-outlined"> favorite_border </span>
             <span class="material-icons-outlined"> mode_comment </span>
-            <span class="material-icons-outlined"> send </span>
+            <span class="material-icons">send</span>
           </div>
           <div>
             <span class="material-icons-outlined"> bookmark_border </span>
@@ -338,6 +338,11 @@
 
   <script>
     let files;
+
+    $('#chat').click(function () {
+      alert("누름");
+      location.replace('/chat');
+    })
 
     $('#nav_bar_add_box').click(function () {
       $('#first_modal').css({

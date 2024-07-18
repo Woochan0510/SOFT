@@ -38,3 +38,7 @@ class UploadFeed(APIView):
         Feed.objects.create(image=image, content=content, user_id=user_id, profile_image=profile_image,like_count=0)
 
         return Response(status=200)
+    
+class Chat(APIView):
+    def get(self, request):
+        return render(request, "silvergram/index.html")

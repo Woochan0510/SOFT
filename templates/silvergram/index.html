@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chat App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #0095f6;
+            color: #fff;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .messages {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #e0e0e0;
+        }
+
+        .message.sent {
+            background-color: #DCF8C6;
+            text-align: right;
+        }
+
+        .message.received {
+            background-color: #fff;
+            text-align: left;
+        }
+
+        .message p {
+            margin: 5px 0;
+        }
+
+        .input-area {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+
+        .input-area input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .input-area button {
+            padding: 8px 20px;
+            background-color: #0095f6;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Chat Room</h2>
+        </div>
+        <div class="messages" id="message-list">
+            <!-- 메시지 목록이 여기에 표시됩니다 -->
+        </div>
+        <div class="input-area">
+            <input type="text" id="message-input" placeholder="메시지 입력...">
+            <button onclick="sendMessage()">전송</button>
+        </div>
+    </div>
+
+    <script>
+        var socket = new WebSocket("ws://192.168.137.1:9700");
+
+        socket.onopen = function (event) {
+            console.log("웹소켓 연결 성공");
+        };
+
+        socket.onmessage = function (event) {
+            var message = event.data;
+            addMessage(message, 'received');
+        };
+
+        socket.onerror = function (error) {
+            console.error("웹소켓 에러 발생:", error);
+        };
+
+        socket.onclose = function (event) {
+            console.log("웹소켓 연결 종료");
+        };
+
+        function sendMessage() {
+            var messageInput = document.getElementById("message-input");
+            var message = messageInput.value.trim();
+
+            if (message !== "") {
+                addMessage(message, 'sent');
+                socket.send(message);
+                messageInput.value = "";
+            }
+        }
+
+        function addMessage(message, type) {
+            var messageList = document.getElementById("message-list");
+            var messageDiv = document.createElement("div");
+            messageDiv.classList.add("message", type === 'sent' ? 'sent' : 'received');
+            messageDiv.innerHTML = `<p>${message}</p>`;
+            messageList.appendChild(messageDiv);
+            messageList.scrollTop = messageList.scrollHeight;
+        }
+    </script>
+</body>
+
+</html>
